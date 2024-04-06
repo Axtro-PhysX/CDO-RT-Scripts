@@ -48,16 +48,37 @@ def ssh_attempt(ip, user, password, pwn_host, dashboard_url, team, demo=False):
     except Exception as e:
         debug_print(f"Error in ssh_attempt for {ip}: {e}")
 
+import requests
+import json
+
+def debug_print(message):
+    # Placeholder for your debugging print function
+    print(message)
+
 def pwboard_callback(target, pwn_host):
     try:
         data = {"ip": target, "type": "bash"}
-        response = requests.post(pwn_host, json=data, verify=False)
+        
+        # Convert data to JSON here to print it easily, then pass it to requests.post
+        json_data = json.dumps(data)
+        
+        debug_print(f"Attempting to post to pwnboard: {pwn_host} with data: {json_data}")
+        
+        # If you have headers, you can include them in your request like so:
+        # headers = {'Content-Type': 'application/json'}
+        # response = requests.post(pwn_host, data=json_data, headers=headers)
+        # And print them:
+        # debug_print(f"Headers: {headers}")
+        
+        response = requests.post(pwn_host, json=data)
+        
         if response.status_code == 200:
-            debug_print(f"Posted to pwnboard: {target}")
+            debug_print(f"Successfully posted to pwnboard: {target}")
         else:
-            debug_print(f"Failed to post to pwnboard: {target} - Status code: {response.status_code}")
+            debug_print(f"Failed to post to pwnboard: {target} - Status code: {response.status_code}, Response: {response.text}")
     except Exception as e:
         debug_print(f"Error in pwboard_callback for {target}: {e}")
+
 
 def post_to_webapp(ip, user, password, dashboard_url, team):
     try:
@@ -66,7 +87,7 @@ def post_to_webapp(ip, user, password, dashboard_url, team):
         if response.status_code == 200:
             debug_print(f"Posted to webapp: {ip}")
         else:
-            debug_print(f"Failed to post to webapp: {ip} - Status code: {response.status_code}")
+            debug_print(f"Failed to post to webapp: {ip} - Status code: {response.status_code} - {response}")
     except Exception as e:
         debug_print(f"Error in post_to_webapp for {ip}: {e}")
 

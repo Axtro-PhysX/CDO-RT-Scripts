@@ -1,0 +1,54 @@
+{
+  "teams": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "networks": [
+    {
+      "ip": "172.16.x",
+      "name": "LAN",
+      "hosts": [
+        {
+          "ip": "6",
+          "name": "MySQL",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "7",
+          "name": "FTP",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "8",
+          "name": "Docker",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "9",
+          "name": "HTTP_Server",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "10",
+          "name": "AD",
+          "os": "Windows_Server_19"
+        },
+        {
+          "ip": "5",
+          "name": "Desktop",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "11",
+          "name": "Windows_Desktop",
+          "os": "Windows_10"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,342 @@
+{
+  "teams": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "board": [
+    {
+      "name": "MySQL",
+      "hosts": [
+        {
+          "ip": "172.16.1.6",
+          "team": "1",
+          "name": "MySQL",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.2.6",
+          "team": "2",
+          "name": "MySQL",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.3.6",
+          "team": "3",
+          "name": "MySQL",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.4.6",
+          "team": "4",
+          "name": "MySQL",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.5.6",
+          "team": "5",
+          "name": "MySQL",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.6.6",
+          "team": "6",
+          "name": "MySQL",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.7.6",
+          "team": "7",
+          "name": "MySQL",
+          "os": "Ubuntu"
+        }
+      ]
+    },
+    {
+      "name": "FTP",
+      "hosts": [
+        {
+          "ip": "172.16.1.7",
+          "team": "1",
+          "name": "FTP",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.2.7",
+          "team": "2",
+          "name": "FTP",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.3.7",
+          "team": "3",
+          "name": "FTP",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.4.7",
+          "team": "4",
+          "name": "FTP",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.5.7",
+          "team": "5",
+          "name": "FTP",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.6.7",
+          "team": "6",
+          "name": "FTP",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.7.7",
+          "team": "7",
+          "name": "FTP",
+          "os": "Ubuntu"
+        }
+      ]
+    },
+    {
+      "name": "Docker",
+      "hosts": [
+        {
+          "ip": "172.16.1.8",
+          "team": "1",
+          "name": "Docker",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.2.8",
+          "team": "2",
+          "name": "Docker",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.3.8",
+          "team": "3",
+          "name": "Docker",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.4.8",
+          "team": "4",
+          "name": "Docker",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.5.8",
+          "team": "5",
+          "name": "Docker",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.6.8",
+          "team": "6",
+          "name": "Docker",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.7.8",
+          "team": "7",
+          "name": "Docker",
+          "os": "Ubuntu"
+        }
+      ]
+    },
+    {
+      "name": "HTTP_Server",
+      "hosts": [
+        {
+          "ip": "172.16.1.9",
+          "team": "1",
+          "name": "HTTP_Server",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.2.9",
+          "team": "2",
+          "name": "HTTP_Server",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.3.9",
+          "team": "3",
+          "name": "HTTP_Server",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.4.9",
+          "team": "4",
+          "name": "HTTP_Server",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.5.9",
+          "team": "5",
+          "name": "HTTP_Server",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.6.9",
+          "team": "6",
+          "name": "HTTP_Server",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.7.9",
+          "team": "7",
+          "name": "HTTP_Server",
+          "os": "Ubuntu"
+        }
+      ]
+    },
+    {
+      "name": "AD",
+      "hosts": [
+        {
+          "ip": "172.16.1.10",
+          "team": "1",
+          "name": "AD",
+          "os": "Windows_Server_19"
+        },
+        {
+          "ip": "172.16.2.10",
+          "team": "2",
+          "name": "AD",
+          "os": "Windows_Server_19"
+        },
+        {
+          "ip": "172.16.3.10",
+          "team": "3",
+          "name": "AD",
+          "os": "Windows_Server_19"
+        },
+        {
+          "ip": "172.16.4.10",
+          "team": "4",
+          "name": "AD",
+          "os": "Windows_Server_19"
+        },
+        {
+          "ip": "172.16.5.10",
+          "team": "5",
+          "name": "AD",
+          "os": "Windows_Server_19"
+        },
+        {
+          "ip": "172.16.6.10",
+          "team": "6",
+          "name": "AD",
+          "os": "Windows_Server_19"
+        },
+        {
+          "ip": "172.16.7.10",
+          "team": "7",
+          "name": "AD",
+          "os": "Windows_Server_19"
+        }
+      ]
+    },
+    {
+      "name": "Desktop",
+      "hosts": [
+        {
+          "ip": "172.16.1.5",
+          "team": "1",
+          "name": "Desktop",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.2.5",
+          "team": "2",
+          "name": "Desktop",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.3.5",
+          "team": "3",
+          "name": "Desktop",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.4.5",
+          "team": "4",
+          "name": "Desktop",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.5.5",
+          "team": "5",
+          "name": "Desktop",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.6.5",
+          "team": "6",
+          "name": "Desktop",
+          "os": "Ubuntu"
+        },
+        {
+          "ip": "172.16.7.5",
+          "team": "7",
+          "name": "Desktop",
+          "os": "Ubuntu"
+        }
+      ]
+    },
+    {
+      "name": "Windows_Desktop",
+      "hosts": [
+        {
+          "ip": "172.16.1.11",
+          "team": "1",
+          "name": "Windows_Desktop",
+          "os": "Windows_10"
+        },
+        {
+          "ip": "172.16.2.11",
+          "team": "2",
+          "name": "Windows_Desktop",
+          "os": "Windows_10"
+        },
+        {
+          "ip": "172.16.3.11",
+          "team": "3",
+          "name": "Windows_Desktop",
+          "os": "Windows_10"
+        },
+        {
+          "ip": "172.16.4.11",
+          "team": "4",
+          "name": "Windows_Desktop",
+          "os": "Windows_10"
+        },
+        {
+          "ip": "172.16.5.11",
+          "team": "5",
+          "name": "Windows_Desktop",
+          "os": "Windows_10"
+        },
+        {
+          "ip": "172.16.6.11",
+          "team": "6",
+          "name": "Windows_Desktop",
+          "os": "Windows_10"
+        },
+        {
+          "ip": "172.16.7.11",
+          "team": "7",
+          "name": "Windows_Desktop",
+          "os": "Windows_10"
+        }
+      ]
+    }
+  ]
+}
