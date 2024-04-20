@@ -20,5 +20,4 @@ This Python script is designed to "snap" (terminate) approximately half of the r
 To run the script, ensure Python and the required `process` module are installed, and execute it from the command line:
 ```bash
 
-Fork of RITSEC Thanos python script 
 python thanos_snap.py
